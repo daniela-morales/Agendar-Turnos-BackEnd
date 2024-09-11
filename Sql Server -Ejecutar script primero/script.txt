@@ -1,0 +1,56 @@
+-- Crear la base de datos ShiftManagement
+CREATE DATABASE ShiftManagement;
+GO
+
+-- Usar la base de datos ShiftManagement
+USE ShiftManagement;
+GO
+
+-- Crear la tabla User
+CREATE TABLE [User] (
+    IdUser INT PRIMARY KEY IDENTITY(1,1),
+	DocumentNumber NVARCHAR(50) NOT NULL,
+    Username NVARCHAR(50) NOT NULL,
+    Password NVARCHAR(50) NOT NULL
+);
+GO
+
+-- Crear la tabla Branch
+CREATE TABLE Branch (
+    IdBranch INT PRIMARY KEY IDENTITY(1,1),
+	Name NVARCHAR(50) NOT NULL,
+    Address NVARCHAR(50) NOT NULL
+);
+GO
+
+-- Crear la tabla Shift
+CREATE TABLE [Shift] (
+    IdShift INT PRIMARY KEY IDENTITY(1,1),
+    IdUser INT NULL,
+    IdBranch INT NOT NULL,
+    ScheduledDateTime DATETIME NOT NULL,
+    ExpirationTime DATETIME NOT NULL,
+    IsActive BIT NOT NULL,
+	DateAssociation DATETIME NULL,
+    FOREIGN KEY (IdUser) REFERENCES [User](IdUser),
+    FOREIGN KEY (IdBranch) REFERENCES Branch(IdBranch)
+);
+GO
+
+-- Insertar datos en la tabla [User]
+INSERT INTO [User] (DocumentNumber, Username, Password)
+VALUES
+('1234567890', 'daniela-morales', 'password123'),
+('0987654321', 'jose-perez', 'password456'),
+('1122334455', 'sara-jaramillo', 'password789'),
+('2233445566', 'pedro-agudelo', 'password101'),
+('3344556677', 'lucas-monsalve', 'password202');
+
+-- Insertar datos en la tabla Branch
+INSERT INTO Branch (Name, Address)
+VALUES
+('Sucursal Principal', 'Calle 123, Bogotá, Colombia'),
+('Sucursal Norte', 'Avenida 45, Bogotá, Colombia'),
+('Sucursal Sur', 'Calle 78, Bogotá, Colombia'),
+('Sucursal Occidente', 'Carrera 12, Bogotá, Colombia'),
+('Sucursal Oriente', 'Avenida 50, Bogotá, Colombia');
